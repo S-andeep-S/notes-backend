@@ -63,18 +63,12 @@ app.delete('/api/notes/:id', (request, response) =>
  const generatedId = () =>
  {
   const maxId = notes.length > 0 ? Math.max(...notes.map(note => note.id)) : 0;
-
-  const note = request.body
   return  maxId + 1
  }
 
 app.post('/api/notes', (request, response) => {
 
-  console.log(body.notes);
-  console.log(body.names);
-
-
-  if (!body.content)
+  if (!request.body.content)
   {
     return response.status(400).json(
       {
@@ -84,8 +78,8 @@ app.post('/api/notes', (request, response) => {
   }
 
   const note = {
-    content: body.content,
-    important: body.important || false,
+    content: request.body.content,
+    important: request.body.important || false,
     id: generatedId()
   }
 
